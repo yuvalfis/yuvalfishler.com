@@ -43,8 +43,11 @@ export default function RetroHome() {
           (aren&apos;t we all?)
         </div>
 
-        <Sidebar hasEntered={hasEntered} />
-
+        {/* <main> precedes <Sidebar> in the DOM so keyboard/AT tab order reaches the
+            primary content first, matching mobile's stacked visual order. Desktop still
+            renders the sidebar on the left via `.shell`'s named grid-template-areas
+            (see retro.module.css) — CSS `order` is deliberately not used here, since it
+            would decouple visual order from DOM/tab order. */}
         <main className={styles.frameR}>
           <HomeHero sectionRef={homeRef} />
           <AboutSection />
@@ -54,6 +57,8 @@ export default function RetroHome() {
           <GuestbookSection />
           <ContactSection />
         </main>
+
+        <Sidebar hasEntered={hasEntered} />
 
         <SiteFooter />
       </div>

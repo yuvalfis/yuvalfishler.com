@@ -96,6 +96,7 @@
 .splashGrid {
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background-image:
     linear-gradient(var(--cyan) 1px, transparent 1px),
     linear-gradient(90deg, var(--cyan) 1px, transparent 1px);
@@ -231,9 +232,18 @@
 }
 
 /* ---------- FAKE FRAMESET LAYOUT ---------------------------------------- */
+/* Named grid areas (not the CSS `order` property) control visual placement here.
+   `<main>` is deliberately placed before `<Sidebar>` in the DOM (see RetroHome.tsx)
+   so keyboard/AT tab order always reaches primary content first; these areas let
+   desktop still render the sidebar to the left of main without touching that order. */
 .shell {
   display: grid;
   grid-template-columns: 210px 1fr;
+  grid-template-areas:
+    "ticker ticker"
+    "construction construction"
+    "sidebar main"
+    "footer footer";
   min-height: 100vh;
   max-width: 1100px;
   margin: 0 auto;
@@ -241,9 +251,18 @@
   border-left: 2px solid #241a4d;
 }
 
+/* every direct grid child gets an explicit min-width: without it, a grid
+   item's *automatic* minimum size is its content's min-content size — so one
+   long unbreakable descendant (the news ticker or the chiptune player's
+   marquee text) can force its whole track, the grid, and the document wider
+   than the viewport instead of being clipped/wrapped like everything else. */
+.shell > * {
+  min-width: 0;
+}
+
 /* top marquee ticker spans both frames */
 .tickerBar {
-  grid-column: 1 / -1;
+  grid-area: ticker;
   padding: 5px 0;
   border-bottom: 2px solid var(--magenta);
   background: #000;
@@ -285,7 +304,7 @@
 
 /* under construction barber-pole banner */
 .construction {
-  grid-column: 1 / -1;
+  grid-area: construction;
   margin: 0;
   padding: 8px 12px;
   border-top: 2px solid #000;
@@ -313,6 +332,7 @@
 
 /* LEFT FRAME — sidebar nav */
 .frameL {
+  grid-area: sidebar;
   position: sticky;
   top: 0;
   align-self: start;
@@ -542,6 +562,7 @@
 
 /* RIGHT FRAME — content */
 .frameR {
+  grid-area: main;
   padding: 0 26px 60px;
   background: rgba(8, 4, 20, 0.72);
 }
@@ -897,9 +918,18 @@
   font-size: 12px;
 }
 
+/* long unbreakable tokens (email addresses, guestbook messages, footer copy)
+   must wrap instead of stretching the frame wider than the viewport */
+.contactBox a,
+.mailLink,
+.entryMessage,
+.footer {
+  overflow-wrap: anywhere;
+}
+
 /* footer */
 .footer {
-  grid-column: 1 / -1;
+  grid-area: footer;
   padding: 16px 10px 26px;
   color: var(--dim);
   background: #000;
@@ -980,15 +1010,80 @@
 @media (max-width: 760px) {
   .shell {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "ticker"
+      "construction"
+      "main"
+      "sidebar"
+      "footer";
+  }
+
+  /* The mobile area's sequence matches DOM/tab order: main first, then the
+     compact sidebar controls. Named areas preserve the desktop frameset
+     without using CSS `order`, which would confuse keyboard and AT users. */
+  .frameR {
+    padding: 0 14px 60px;
   }
   .frameL {
     position: static;
     max-height: none;
+    overflow-x: hidden;
     border-bottom: 3px ridge var(--panel-hi);
     border-right: none;
   }
+
+  .avatar {
+    max-width: 160px;
+    margin-inline: auto;
+  }
+
+  /* compact the 7-button nav into a wrapping row of pills, each a real
+     44px touch target, instead of 7 full-width stacked blocks */
+  .sectionNav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .navButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    flex: 1 1 calc(50% - 8px);
+    margin: 0;
+    min-height: 44px;
+    text-align: center;
+  }
+
+  .playerControls button {
+    min-height: 44px;
+  }
+
+  .splashButtonPrimary,
+  .splashButtonSkip {
+    min-height: 44px;
+  }
+
+  .guestbookSubmit {
+    min-height: 44px;
+  }
+  .guestbookForm input,
+  .guestbookForm textarea {
+    min-height: 44px;
+  }
+}
+
+/* tighter fine-tuning for small phones (320-430px), layered on top of the
+   760px frameset-stacking breakpoint above */
+@media (max-width: 480px) {
   .frameR {
-    padding: 0 14px 60px;
+    padding: 0 12px 48px;
+  }
+  .hero {
+    padding: 16px 0 4px;
+  }
+  .navButton {
+    flex: 1 1 100%;
   }
 }
 

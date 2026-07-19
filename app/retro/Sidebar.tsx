@@ -33,7 +33,7 @@ export default function Sidebar({ hasEntered }: SidebarProps) {
       <p className={styles.avatarCaption}>~ that&apos;s me! (webcam &apos;03) ~</p>
 
       <p className={styles.navTitle}>:: NAVIGATION ::</p>
-      <nav aria-label="Section navigation">
+      <nav aria-label="Section navigation" className={styles.sectionNav}>
         {NAV_ITEMS.map((item) => (
           <button
             key={item.id}
