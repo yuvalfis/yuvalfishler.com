@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Yuval Fishler</title>
+  <desc id="desc">Yuval Fishler on a warm neutral background</desc>
+  <rect width="1200" height="630" fill="#f3efe6"/>
+  <circle cx="1025" cy="80" r="330" fill="#c95838" opacity=".07"/>
+  <circle cx="945" cy="315" r="188" fill="#faf8f2" stroke="#17201d" stroke-opacity=".14"/>
+  <circle cx="945" cy="315" r="132" fill="none" stroke="#c95838" stroke-opacity=".25"/>
+  <text x="945" y="347" fill="#17201d" font-family="Georgia, serif" font-size="90" font-style="italic" text-anchor="middle">YF</text>
+  <circle cx="1093" cy="201" r="9" fill="#c95838"/>
+  <path d="M92 123h54" stroke="#9f3f25"/>
+  <text x="163" y="130" fill="#9f3f25" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="4">PERSONAL WEBSITE</text>
+  <text x="82" y="295" fill="#17201d" font-family="Georgia, serif" font-size="116" letter-spacing="-5">Yuval</text>
+  <text x="82" y="409" fill="#c95838" font-family="Georgia, serif" font-size="116" font-style="italic" letter-spacing="-5">Fishler.</text>
+  <text x="88" y="536" fill="#59615d" font-family="Arial, sans-serif" font-size="24" letter-spacing="1">YUVALFISHLER.COM</text>
+</svg>
