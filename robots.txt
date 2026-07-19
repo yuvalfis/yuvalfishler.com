@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://yuvalfishler.com/sitemap.xml
