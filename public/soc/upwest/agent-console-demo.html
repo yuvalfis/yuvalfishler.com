@@ -28,6 +28,7 @@
     --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   }
   *{ box-sizing:border-box; }
+  [hidden]{ display:none !important; }
   html,body{ height:100%; }
   body{ margin:0; background:var(--bg); color:var(--fg); font-family:var(--font-body); font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased; }
   button{ font:inherit; cursor:pointer; }
@@ -319,7 +320,7 @@
           <div class="row" data-name="Calendar conflict check">
             <div class="row-main"><div><div class="nm">Calendar conflict check</div><div class="desc">Scans approved calendars for overlapping meetings and flags clashes.</div></div><span class="type">Skill</span><span class="agent-chip">Operational</span><span class="grow"></span></div>
           </div>
-          <div class="row" data-name="Cap table digest">
+          <div class="row" data-financial-scope="task" data-name="Cap table digest">
             <div class="row-main"><div><div class="nm">Cap table digest</div><div class="desc">Pulls a read-only Carta cap-table summary for Gil.</div></div><span class="type">Task</span><span class="agent-chip">Financial · Gil</span><span class="grow"></span></div>
           </div>
         </div>
@@ -338,7 +339,7 @@
             </div>
             <button class="lite" data-revert data-hash="a1b3c9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/></svg>Revert</button>
           </div>
-          <div class="commit">
+          <div class="commit" data-financial-scope="history" data-hash="7f2e10">
             <div class="rail"><span class="node"></span></div>
             <div class="cbody">
               <div class="cline"><span class="chash">7f2e10</span><span class="cmsg">Add “Cap table digest” task to Financial</span></div>
@@ -354,7 +355,7 @@
             </div>
             <button class="lite" data-revert data-hash="c93a44"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/></svg>Revert</button>
           </div>
-          <div class="commit">
+          <div class="commit" data-financial-scope="history" data-hash="5b1d78">
             <div class="rail"><span class="node"></span></div>
             <div class="cbody">
               <div class="cline"><span class="chash">5b1d78</span><span class="cmsg">Tighten Financial data scope to approved folders</span></div>
@@ -379,7 +380,7 @@
         <div class="rows">
           <div class="row"><div class="row-main"><button class="switch on" data-name="Sample inbound digest test" aria-label="Sample inbound digest test" aria-pressed="true"></button><div><div class="nm">Sample inbound digest test</div><div class="meta">Test schedule · Mon · 08:00</div><div class="desc">Retrieves sample inbound data and displays the result only inside this console. It does not email anyone.</div></div><span class="grow"></span><span class="agent-chip">Deal Flow</span><span class="status pill-ok"><span class="dot-ok"></span>Active</span></div></div>
           <div class="row"><div class="row-main"><button class="switch on" data-name="Connector health check" aria-label="Connector health check" aria-pressed="true"></button><div><div class="nm">Connector health check</div><div class="meta">Daily · 07:00</div><div class="desc">Verifies every connector's authentication and retrieval each morning.</div></div><span class="grow"></span><span class="agent-chip sys">System</span><span class="status pill-ok"><span class="dot-ok"></span>Active</span></div></div>
-          <div class="row"><div class="row-main"><button class="switch" data-name="Cost summary test" aria-label="Cost summary test" aria-pressed="false"></button><div><div class="nm">Cost summary test</div><div class="meta">Test schedule · Fri · 16:00</div><div class="desc">Compiles sample model-usage and operating-cost totals for review inside the console.</div></div><span class="grow"></span><span class="agent-chip">Financial · Gil</span><span class="status pill-paused">Paused</span></div></div>
+          <div class="row" data-financial-scope="schedule"><div class="row-main"><button class="switch" data-name="Cost summary test" aria-label="Cost summary test" aria-pressed="false"></button><div><div class="nm">Cost summary test</div><div class="meta">Test schedule · Fri · 16:00</div><div class="desc">Compiles sample model-usage and operating-cost totals for review inside the console.</div></div><span class="grow"></span><span class="agent-chip">Financial · Gil</span><span class="status pill-paused">Paused</span></div></div>
         </div>
       </section>
 
@@ -388,18 +389,18 @@
         <h2 class="h">Monitoring</h2>
         <p class="sub">Availability, connectors, jobs, and spend at a glance.</p>
         <div class="tiles">
-          <div class="tile"><div class="k">Agents online</div><div class="v ok">3<small> / 3</small></div></div>
-          <div class="tile"><div class="k">Connectors</div><div class="v ok">4<small> healthy</small></div></div>
-          <div class="tile"><div class="k">Scheduled jobs</div><div class="v">2<small> active</small></div></div>
-          <div class="tile"><div class="k">Est. spend / mo</div><div class="v">$180</div></div>
+          <div class="tile" data-monitoring="agents"><div class="k">Authorized agents online</div><div class="v ok"><span data-monitoring-value data-gil-value="3" data-dana-value="2">3</span><small> / <span data-monitoring-total data-gil-value="3" data-dana-value="2">3</span></small></div></div>
+          <div class="tile" data-monitoring="connectors"><div class="k">Connectors</div><div class="v ok"><span data-monitoring-value data-gil-value="4" data-dana-value="2">4</span><small> healthy</small></div></div>
+          <div class="tile" data-monitoring="jobs"><div class="k">Scheduled jobs</div><div class="v"><span data-monitoring-value data-gil-value="2" data-dana-value="2">2</span><small> active</small></div></div>
+          <div class="tile" data-financial-scope="monitoring"><div class="k">Est. spend / mo</div><div class="v">$180</div></div>
         </div>
         <table>
           <thead><tr><th>Connector</th><th>Scope</th><th class="ctr">Status</th></tr></thead>
           <tbody>
             <tr><td>Google Workspace</td><td>Gmail · Calendar</td><td class="ctr"><span class="yes">● Healthy</span></td></tr>
             <tr><td>Affinity</td><td>Lists · people · activity</td><td class="ctr"><span class="yes">● Healthy</span></td></tr>
-            <tr><td>Carta</td><td>Cap table · Gil only</td><td class="ctr"><span class="yes">● Healthy</span></td></tr>
-            <tr><td>Dropbox</td><td>Financial folders · Gil only</td><td class="ctr"><span class="yes">● Healthy</span></td></tr>
+            <tr data-financial-scope="monitoring"><td>Carta</td><td>Cap table · Gil only</td><td class="ctr"><span class="yes">● Healthy</span></td></tr>
+            <tr data-financial-scope="monitoring"><td>Dropbox</td><td>Financial folders · Gil only</td><td class="ctr"><span class="yes">● Healthy</span></td></tr>
           </tbody>
         </table>
       </section>
@@ -435,37 +436,67 @@
   // Agent selection
   var cards = root.querySelectorAll('.agent');
   var threads = root.querySelectorAll('.thread');
+  function isGil(){ return actor.value==='gil'; }
+  function financialContainer(control){
+    return control.closest('[data-financial-scope]') || control.closest('#finChat');
+  }
+  function rejectRestrictedInteraction(control){
+    if(!isGil() && financialContainer(control)){
+      toast("You aren't authorized for Financial controls");
+      return true;
+    }
+    return false;
+  }
   function selectAgent(id){
     cards.forEach(function(c){ c.classList.toggle('sel', c.dataset.agent===id); });
     threads.forEach(function(t){ t.classList.toggle('active', t.dataset.agent===id); });
   }
   cards.forEach(function(c){ c.addEventListener('click', function(){
-    if(c.classList.contains('locked')) { toast("You aren't authorized for the Financial Agent"); return; }
+    if(!isGil() && c.matches('[data-gil-only]')) { toast("You aren't authorized for the Financial Agent"); return; }
     selectAgent(c.dataset.agent);
   });});
 
   // Actor / permissions
   var actor = root.getElementById('actor');
+  var financialCard = root.querySelector('.agent[data-agent="financial"]');
+  var finChat = root.getElementById('finChat');
+  function updateMonitoring(actorKey){
+    root.querySelectorAll('[data-monitoring-value], [data-monitoring-total]').forEach(function(value){
+      value.textContent = value.dataset[actorKey+'Value'];
+    });
+  }
   function applyActor(){
-    var gil = actor.value==='gil';
+    var gil = isGil();
     var first = gil ? 'Gil' : 'Dana';
+    var activeFinancial = root.activeElement && root.activeElement.closest && root.activeElement.closest('[data-financial-scope]');
     root.querySelectorAll('[data-username]').forEach(function(el){ el.textContent = first; });
-    root.querySelectorAll('[data-gil-only]').forEach(function(el){ el.classList.toggle('locked', !gil); });
+    financialCard.classList.toggle('locked', !gil);
+    financialCard.setAttribute('aria-disabled', String(!gil));
+    root.querySelectorAll('[data-financial-scope]').forEach(function(el){
+      el.hidden = !gil;
+      el.querySelectorAll('button, input, select, textarea').forEach(function(control){ control.disabled = !gil; });
+      if(!gil){ el.querySelectorAll('.versions').forEach(function(versions){ versions.hidden = true; }); }
+    });
     root.getElementById('finLock').style.display = gil ? 'none' : '';
-    root.getElementById('finChat').style.display = gil ? '' : 'none';
-    if(!gil){ var fin = root.querySelector('.agent[data-agent="financial"]'); if(fin.classList.contains('sel')) selectAgent('dealflow'); }
+    finChat.style.display = gil ? '' : 'none';
+    finChat.querySelectorAll('button, input').forEach(function(control){ control.disabled = !gil; });
+    updateMonitoring(gil ? 'gil' : 'dana');
+    if(!gil && financialCard.classList.contains('sel')) selectAgent('dealflow');
+    if(!gil && activeFinancial) actor.focus();
   }
   actor.addEventListener('change', applyActor);
 
   // History / rollback
   root.querySelectorAll('[data-history]').forEach(function(btn){
     btn.addEventListener('click', function(){
+      if(rejectRestrictedInteraction(btn)) return;
       var box = btn.closest('.row').querySelector('.versions');
       box.hidden = !box.hidden;
     });
   });
   root.querySelectorAll('.versions button').forEach(function(v){
     v.addEventListener('click', function(){
+      if(rejectRestrictedInteraction(v)) return;
       var row = v.closest('.row');
       if(v.querySelector('.rb')){
         row.querySelector('.vbadge').textContent = v.dataset.v;
@@ -478,6 +509,7 @@
   // Switches
   root.querySelectorAll('.switch').forEach(function(s){
     s.addEventListener('click', function(){
+      if(rejectRestrictedInteraction(s)) return;
       s.classList.toggle('on');
       var st = s.closest('.row-main').querySelector('.status');
       var on = s.classList.contains('on');
@@ -497,12 +529,16 @@
 
   // History — revert
   root.querySelectorAll('[data-revert]').forEach(function(b){
-    b.addEventListener('click', function(){ toast('Reverted to commit '+b.dataset.hash+' · sample data'); });
+    b.addEventListener('click', function(){
+      if(rejectRestrictedInteraction(b)) return;
+      toast('Reverted to commit '+b.dataset.hash+' · sample data');
+    });
   });
 
   // Composer (preview only)
   root.querySelectorAll('[data-send]').forEach(function(b){
     b.addEventListener('click', function(){
+      if(rejectRestrictedInteraction(b)) return;
       var inp = b.previousElementSibling;
       if(inp && inp.value.trim()){ inp.value=''; toast('Preview only — sending is disabled in the demo'); }
     });

@@ -151,6 +151,105 @@ test("Phase 1 declines Affinity writes and keeps the sample digest in the consol
   assert.match(demo, /Production scheduled reports are deferred to Phase 2/i);
 });
 
+test("every Financial task, history, schedule, and monitoring surface has explicit Gil-only markup", () => {
+  const demo = read("public/soc/upwest/agent-console-demo.html");
+
+  assert.match(demo, /<div class="row" data-financial-scope="task" data-name="Cap table digest">/);
+  assert.match(demo, /<div class="commit" data-financial-scope="history" data-hash="7f2e10">/);
+  assert.match(demo, /<div class="commit" data-financial-scope="history" data-hash="5b1d78">/);
+  assert.equal(
+    (demo.match(/data-financial-scope="history"/g) || []).length,
+    2,
+    "expected both Financial history entries to be explicitly scoped",
+  );
+  assert.match(demo, /<div class="row" data-financial-scope="schedule">[^\n]+data-name="Cost summary test"/);
+  assert.match(demo, /<div class="tile" data-financial-scope="monitoring"><div class="k">Est\. spend \/ mo/);
+  assert.match(demo, /<tr data-financial-scope="monitoring"><td>Carta<\/td>/);
+  assert.match(demo, /<tr data-financial-scope="monitoring"><td>Dropbox<\/td>/);
+});
+
+test("Dana cannot see Financial scoped content or operate any control inside it", () => {
+  const demo = read("public/soc/upwest/agent-console-demo.html");
+  const permissions = demo.slice(
+    demo.indexOf("// Actor / permissions"),
+    demo.indexOf("// History / rollback"),
+  );
+
+  assert.match(permissions, /querySelectorAll\('\[data-financial-scope\]'\)[\s\S]*?el\.hidden\s*=\s*!gil/);
+  assert.match(permissions, /querySelectorAll\('button, input, select, textarea'\)[\s\S]*?control\.disabled\s*=\s*!gil/);
+  assert.match(permissions, /finChat\.querySelectorAll\('button, input'\)[\s\S]*?control\.disabled\s*=\s*!gil/);
+  assert.match(permissions, /querySelectorAll\('\.versions'\)[\s\S]*?versions\.hidden\s*=\s*true/);
+  assert.match(permissions, /financialCard\.classList\.contains\('sel'\)[\s\S]*?selectAgent\('dealflow'\)/);
+});
+
+test("monitoring aggregates report only the agents and connectors authorized for the selected actor", () => {
+  const demo = read("public/soc/upwest/agent-console-demo.html");
+  const monitoring = demo.slice(demo.indexOf("<!-- MONITOR -->"), demo.indexOf("<!-- BACKUPS -->"));
+  const permissions = demo.slice(
+    demo.indexOf("// Actor / permissions"),
+    demo.indexOf("// History / rollback"),
+  );
+
+  assert.match(
+    monitoring,
+    /data-monitoring="agents"[\s\S]*?data-monitoring-value data-gil-value="3" data-dana-value="2"[\s\S]*?data-monitoring-total data-gil-value="3" data-dana-value="2"/,
+  );
+  assert.match(
+    monitoring,
+    /data-monitoring="connectors"[\s\S]*?data-monitoring-value data-gil-value="4" data-dana-value="2"/,
+  );
+  assert.match(permissions, /function updateMonitoring\(actorKey\)/);
+  assert.match(permissions, /querySelectorAll\('\[data-monitoring-value\], \[data-monitoring-total\]'\)/);
+  assert.match(permissions, /value\.textContent\s*=\s*value\.dataset\[actorKey\+'Value'\]/);
+  assert.match(permissions, /updateMonitoring\(gil\s*\?\s*'gil'\s*:\s*'dana'\)/);
+});
+
+test("the scheduled-job aggregate counts the two visible active non-Financial jobs for both actors", () => {
+  const demo = read("public/soc/upwest/agent-console-demo.html");
+  const monitoring = demo.slice(demo.indexOf("<!-- MONITOR -->"), demo.indexOf("<!-- BACKUPS -->"));
+
+  assert.match(
+    monitoring,
+    /data-monitoring="jobs"[\s\S]*?data-monitoring-value data-gil-value="2" data-dana-value="2">2<\/span><small> active<\/small>/,
+  );
+  assert.match(demo, /class="switch on" data-name="Sample inbound digest test"/);
+  assert.match(demo, /class="switch on" data-name="Connector health check"/);
+  assert.match(
+    demo,
+    /data-financial-scope="schedule"[\s\S]*?class="switch" data-name="Cost summary test"/,
+  );
+  assert.doesNotMatch(
+    demo,
+    /data-financial-scope="schedule"[\s\S]*?class="switch on" data-name="Cost summary test"/,
+  );
+});
+
+test("the Financial agent card remains visible but exposes its locked state accessibly", () => {
+  const demo = read("public/soc/upwest/agent-console-demo.html");
+
+  assert.match(demo, /<button class="agent" data-agent="financial" data-gil-only(?![^>]*data-financial-scope)/);
+  assert.match(demo, /financialCard\.setAttribute\('aria-disabled',\s*String\(!gil\)\)/);
+  assert.match(demo, /if\(!isGil\(\)\s*&&\s*c\.matches\('\[data-gil-only\]'\)\)/);
+});
+
+test("schedule and history handlers defensively reject non-Gil Financial interaction", () => {
+  const demo = read("public/soc/upwest/agent-console-demo.html");
+  const historyHandlers = demo.slice(demo.indexOf("// History / rollback"), demo.indexOf("// Switches"));
+  const scheduleHandlers = demo.slice(demo.indexOf("// Switches"), demo.indexOf("// Backups"));
+  const revertHandlers = demo.slice(demo.indexOf("// History — revert"), demo.indexOf("// Composer"));
+  const composerHandlers = demo.slice(demo.indexOf("// Composer"), demo.indexOf("// Toast"));
+
+  assert.match(demo, /function financialContainer\(control\)/);
+  assert.match(demo, /control\.closest\('\[data-financial-scope\]'\)\s*\|\|\s*control\.closest\('#finChat'\)/);
+  assert.match(demo, /function rejectRestrictedInteraction\(control\)/);
+  assert.match(demo, /if\(!isGil\(\)\s*&&\s*financialContainer\(control\)\)/);
+  assert.match(historyHandlers, /if\(rejectRestrictedInteraction\(btn\)\) return;/);
+  assert.match(historyHandlers, /if\(rejectRestrictedInteraction\(v\)\) return;/);
+  assert.match(scheduleHandlers, /if\(rejectRestrictedInteraction\(s\)\) return;/);
+  assert.match(revertHandlers, /if\(rejectRestrictedInteraction\(b\)\) return;/);
+  assert.match(composerHandlers, /if\(rejectRestrictedInteraction\(b\)\) return;/);
+});
+
 test("the proxy never issues an HTTP Basic Auth challenge", () => {
   const proxy = read("proxy.ts");
   const authHelper = read("upwest-auth.ts");
