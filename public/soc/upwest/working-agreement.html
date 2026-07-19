@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>UpWest AI Agent Platform — Working Agreement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Palette lifted from the source document */
+    --bg: oklch(0.987 0.004 110);
+    --surface: oklch(1 0 0);
+    --surface-2: oklch(0.975 0.006 150);
+    --fg: oklch(0.28 0.014 168);
+    --muted: oklch(0.52 0.015 168);
+    --faint: oklch(0.62 0.012 168);
+    --border: oklch(0.915 0.014 165);
+    --border-strong: oklch(0.86 0.02 168);
+    --accent: oklch(0.52 0.072 178);
+    --accent-ink: oklch(0.44 0.07 178);
+    --accent-wash: oklch(0.965 0.018 172);
+    --danger-ink: oklch(0.5 0.09 40);
+
+    --font-display: "Spectral", Georgia, "Times New Roman", serif;
+    --font-body: "Inter", system-ui, -apple-system, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+    --maxw: 1180px;
+    --col: 68ch;
+    --pad: clamp(1.25rem, 4vw, 3.5rem);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 16.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a{ color: inherit; }
+
+  ::selection{ background: var(--accent-wash); color: var(--accent-ink); }
+
+  .eyebrow{
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--accent-ink);
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position: sticky; top: 0; z-index: 40;
+    display:flex; align-items:center; justify-content:space-between;
+    gap: 1rem;
+    padding: 0.7rem var(--pad);
+    background: color-mix(in oklab, var(--bg) 82%, transparent);
+    backdrop-filter: saturate(1.2) blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar .mark{
+    font-family: var(--font-mono);
+    font-size: 12px; letter-spacing: 0.04em;
+    color: var(--muted);
+    display:flex; align-items:center; gap:.55rem;
+  }
+  .topbar .mark b{ color: var(--fg); font-weight: 600; letter-spacing: 0.14em; }
+  .dot{ width:6px; height:6px; border-radius:50%; background: var(--accent); display:inline-block; }
+  .btn{
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 500; letter-spacing: 0.01em;
+    color: var(--surface); background: var(--accent-ink);
+    border: none; border-radius: 7px;
+    padding: 0.55rem 0.95rem;
+    display:inline-flex; align-items:center; gap:.5rem;
+    cursor: pointer;
+    box-shadow: 0 1px 2px oklch(0.4 0.05 178 / 0.25), 0 2px 8px oklch(0.4 0.05 178 / 0.14);
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .btn:hover{ background: var(--accent); box-shadow: 0 2px 4px oklch(0.4 0.05 178 / 0.3), 0 6px 16px oklch(0.4 0.05 178 / 0.2); }
+  .btn:active{ transform: translateY(2px); }
+  .btn svg{ width:15px; height:15px; }
+
+  /* ---------- Cover ---------- */
+  .cover{
+    padding: clamp(3rem, 8vw, 6rem) var(--pad) clamp(2.5rem, 5vw, 4rem);
+    max-width: var(--maxw); margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .cover-top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    flex-wrap:wrap; gap:.5rem 1.5rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .conf{
+    font-size:11px; letter-spacing:0.1em; text-transform:uppercase; font-weight:500;
+    color: var(--faint);
+    display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .conf .lock{ width:12px; height:12px; color: var(--accent-ink); }
+  .cover h1{
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 6.2vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: clamp(1.8rem, 4vw, 2.6rem) 0 0;
+    max-width: 18ch;
+  }
+  .cover h1 em{ font-style: italic; color: var(--accent-ink); }
+  .cover .lede{
+    margin: 1.4rem 0 0;
+    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 52ch;
+    font-weight: 400;
+  }
+  .cover-meta{
+    display:grid; grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 1px; margin-top: clamp(2.2rem, 5vw, 3.2rem);
+    background: var(--border);
+    border: 1px solid var(--border); border-radius: 10px; overflow:hidden;
+  }
+  .cover-meta div{ background: var(--surface); padding: 1rem 1.15rem; }
+  .cover-meta dt{ font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color: var(--faint); font-weight:500; }
+  .cover-meta dd{ margin:.4rem 0 0; font-size:14.5px; font-weight:500; color: var(--fg); }
+
+  /* ---------- Layout ---------- */
+  .shell{
+    max-width: var(--maxw); margin: 0 auto;
+    padding: clamp(2rem, 4vw, 3.5rem) var(--pad) 5rem;
+    display:grid;
+    grid-template-columns: 232px minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  /* ---------- TOC ---------- */
+  .toc{
+    position: sticky; top: 72px;
+    align-self: start;
+    font-size: 13px;
+  }
+  .toc-title{
+    font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--faint); font-weight:500; margin: 0 0 .85rem;
+  }
+  .toc ol{ list-style:none; margin:0; padding:0; }
+  .toc li{ margin: 0; }
+  .toc a{
+    display:flex; gap:.7rem; align-items:baseline;
+    text-decoration:none; color: var(--muted);
+    padding: .3rem 0 .3rem .7rem;
+    border-left: 2px solid var(--border);
+    line-height: 1.35;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .toc a .n{ font-family: var(--font-mono); font-size:11px; color: var(--faint); flex:0 0 auto; }
+  .toc a:hover{ color: var(--fg); border-color: var(--border-strong); }
+  .toc a.active{ color: var(--accent-ink); border-color: var(--accent); font-weight:500; }
+  .toc a.active .n{ color: var(--accent-ink); }
+
+  /* ---------- Article ---------- */
+  article{ max-width: 74ch; }
+  section{ scroll-margin-top: 84px; padding-top: clamp(2.4rem, 5vw, 3.6rem); }
+  section:first-child{ padding-top: 0; }
+
+  .sec-head{ display:flex; align-items:baseline; gap: 1rem; margin-bottom: 1.25rem; }
+  .sec-head .num{
+    font-family: var(--font-mono); font-size: 13px; font-weight:500;
+    color: var(--accent-ink); flex:0 0 auto; padding-top:.35rem;
+  }
+  h2{
+    font-family: var(--font-display); font-weight: 500;
+    font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+    line-height: 1.1; letter-spacing: -0.015em;
+    margin: 0;
+  }
+  h3{
+    font-family: var(--font-body); font-weight: 600;
+    font-size: 1.02rem; letter-spacing: 0;
+    margin: 1.8rem 0 .5rem;
+    color: var(--fg);
+  }
+  p{ margin: 0 0 1rem; max-width: 68ch; color: var(--fg); }
+  p.muted{ color: var(--muted); }
+  strong{ font-weight: 600; }
+  em.key{ font-style: normal; color: var(--accent-ink); font-weight: 500; }
+
+  /* Lists */
+  ul.clean{ list-style:none; margin: .3rem 0 1.2rem; padding:0; max-width: 68ch; }
+  ul.clean li{
+    position: relative; padding: .32rem 0 .32rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  ul.clean li:last-child{ border-bottom: none; }
+  ul.clean li::before{
+    content:""; position:absolute; left: 2px; top: .95em;
+    width: 5px; height:5px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* Check lists */
+  ul.check{ list-style:none; margin: .5rem 0 1.2rem; padding:0; display:grid; gap:.15rem; max-width: 70ch; }
+  ul.check li{
+    display:flex; gap:.75rem; align-items:flex-start;
+    padding: .5rem 0; border-bottom: 1px solid var(--border);
+  }
+  ul.check li:last-child{ border-bottom:none; }
+  ul.check svg{ flex:0 0 auto; width:17px; height:17px; margin-top:.18em; color: var(--accent); }
+
+  /* Numbered deliverables */
+  ol.numbered{ list-style:none; counter-reset: item; margin: .5rem 0 1.2rem; padding:0; }
+  ol.numbered li{
+    counter-increment: item;
+    position: relative; padding: .55rem 0 .55rem 2.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  ol.numbered li:last-child{ border-bottom:none; }
+  ol.numbered li::before{
+    content: counter(item, decimal-leading-zero);
+    position:absolute; left:0; top:.62rem;
+    font-family: var(--font-mono); font-size: 12px; font-weight:500;
+    color: var(--accent-ink);
+  }
+
+  /* Callout — executive summary / limits */
+  .callout{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: clamp(1.3rem, 3vw, 1.9rem) clamp(1.4rem, 3vw, 2rem);
+    margin: 0 0 1.2rem;
+    box-shadow: 0 1px 2px oklch(0.4 0.03 168 / 0.04), 0 10px 30px oklch(0.4 0.03 168 / 0.05);
+  }
+  .callout.accent{ background: var(--accent-wash); border-color: color-mix(in oklab, var(--accent) 22%, var(--border)); }
+  .callout p:last-child{ margin-bottom:0; }
+  .callout .tag{
+    font-size:11px; letter-spacing:0.1em; text-transform:uppercase; font-weight:500;
+    color: var(--accent-ink); margin-bottom:.7rem;
+  }
+
+  /* Agents grid */
+  .agents{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border);
+           border:1px solid var(--border); border-radius: 12px; overflow:hidden; margin: .6rem 0 1.4rem; }
+  .agent{ background: var(--surface); padding: 1.3rem 1.25rem 1.4rem; }
+  .agent .an{ font-family: var(--font-mono); font-size: 12px; color: var(--accent-ink); }
+  .agent h4{ font-family: var(--font-display); font-weight:500; font-size: 1.22rem; margin:.55rem 0 .4rem; letter-spacing:-0.01em; }
+  .agent p{ font-size: 13.5px; color: var(--muted); margin:0; line-height:1.5; }
+  .agent.gated{ position:relative; }
+  .agent .chip{
+    display:inline-flex; align-items:center; gap:.35rem;
+    font-size:11px; letter-spacing:0.04em; font-weight:500;
+    color: var(--accent-ink); background: var(--accent-wash);
+    border:1px solid color-mix(in oklab, var(--accent) 25%, var(--border));
+    border-radius: 999px; padding:.15rem .55rem; margin-top:.7rem;
+  }
+  .agent .chip svg{ width:11px; height:11px; }
+
+  /* two-column scope */
+  .scope{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem 2.4rem; margin:.4rem 0 1rem; }
+  .scope h3{ margin-top:.2rem; display:flex; align-items:center; gap:.6rem; }
+  .scope h3 .ro{ font-family:var(--font-mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase;
+    color: var(--accent-ink); border:1px solid color-mix(in oklab,var(--accent) 30%, var(--border)); border-radius:4px; padding:.1rem .3rem; }
+
+  /* Pricing */
+  .pricing{ display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin:.6rem 0 1.4rem; }
+  .price{
+    background: var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding: 1.5rem 1.4rem;
+    box-shadow: 0 1px 2px oklch(0.4 0.03 168 / 0.04);
+  }
+  .price.lead{ background: var(--fg); border-color: var(--fg); color: var(--bg); }
+  .price .plabel{ font-size:11px; letter-spacing:0.1em; text-transform:uppercase; font-weight:500; color: var(--faint); }
+  .price.lead .plabel{ color: color-mix(in oklab, var(--bg) 62%, transparent); }
+  .price .amount{ font-family: var(--font-display); font-weight:500; font-size: clamp(1.9rem,4vw,2.5rem); letter-spacing:-0.02em; margin:.5rem 0 .2rem; }
+  .price .per{ font-family: var(--font-mono); font-size:12.5px; color: var(--muted); }
+  .price.lead .per{ color: color-mix(in oklab, var(--bg) 68%, transparent); }
+  .price .pnote{ margin:.9rem 0 0; font-size:13px; line-height:1.5; color: var(--muted); }
+  .price.lead .pnote{ color: color-mix(in oklab, var(--bg) 78%, transparent); }
+
+  table.costs{ width:100%; border-collapse: collapse; margin:.4rem 0 1rem; font-size:14.5px; }
+  table.costs th, table.costs td{ text-align:left; padding:.7rem .2rem; border-bottom:1px solid var(--border); }
+  table.costs th{ font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint); font-weight:500; }
+  table.costs td.amt{ text-align:right; font-family: var(--font-mono); font-size:13.5px; white-space:nowrap; }
+  table.costs tr.total td{ border-bottom:none; border-top:2px solid var(--border-strong); font-weight:600; padding-top:.9rem; }
+  table.costs tr.total td.amt{ color: var(--accent-ink); }
+
+  .excl li::before{ background: var(--danger-ink); border-radius:1px; width:8px; height:1.5px; top:1.05em; }
+
+  hr.rule{ border:none; border-top:1px solid var(--border); margin: 0; }
+
+  footer{
+    max-width: var(--maxw); margin: 0 auto; padding: 2.5rem var(--pad) 4rem;
+    border-top: 1px solid var(--border);
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+    font-size:12px; color: var(--faint); font-family: var(--font-mono); letter-spacing:0.02em;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1000px){
+    .shell{ grid-template-columns: 1fr; gap: 1.5rem; }
+    .toc{ position: static; top:auto; }
+    .toc-wrap{ border:1px solid var(--border); border-radius:10px; background: var(--surface); }
+    .toc-wrap > summary{
+      list-style:none; cursor:pointer; padding: .85rem 1.1rem;
+      font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color: var(--muted); font-weight:500;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .toc-wrap > summary::-webkit-details-marker{ display:none; }
+    .toc-wrap[open] > summary{ border-bottom:1px solid var(--border); }
+    .toc-inner{ padding: .5rem 1.1rem 1rem; }
+    .toc-title{ display:none; }
+    article{ max-width: 100%; }
+  }
+  @media (min-width: 1001px){
+    .toc-wrap > summary{ display:none; }
+    .toc-inner{ display:block !important; }
+  }
+  @media (max-width: 720px){
+    .cover-meta{ grid-template-columns: repeat(2,1fr); }
+    .agents{ grid-template-columns: 1fr; }
+    .scope{ grid-template-columns: 1fr; }
+    .pricing{ grid-template-columns: 1fr; }
+    .cover-top{ flex-direction: column; }
+  }
+
+  /* ---------- Ghost button + demo launcher ---------- */
+  .btn.ghost{ background: var(--surface); color: var(--accent-ink); border:1px solid color-mix(in oklab, var(--accent) 30%, var(--border)); box-shadow:none; }
+  .btn.ghost:hover{ background: var(--accent-wash); box-shadow:none; }
+
+  .demo-cta{
+    display:inline-flex; align-items:center; gap:.6rem; margin-top:.4rem;
+    font-family: var(--font-body); font-size:14px; font-weight:500; letter-spacing:0.01em;
+    color: var(--surface); background: var(--accent-ink); border:none; border-radius:9px;
+    padding:.7rem 1.15rem; cursor:pointer;
+    box-shadow: 0 1px 2px oklch(0.4 0.05 178 / 0.25), 0 4px 14px oklch(0.4 0.05 178 / 0.16);
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .demo-cta:hover{ background: var(--accent); box-shadow: 0 3px 6px oklch(0.4 0.05 178 / 0.3), 0 8px 22px oklch(0.4 0.05 178 / 0.22); }
+  .demo-cta:active{ transform: translateY(2px); }
+  .demo-cta svg{ width:16px; height:16px; }
+
+  /* Modal */
+  .demo-overlay{
+    position: fixed; inset:0; z-index:200;
+    display:flex; align-items:center; justify-content:center;
+    padding: clamp(20px, 5vh, 56px) clamp(20px, 5vw, 64px);
+    background: oklch(0.22 0.02 168 / 0.5); backdrop-filter: blur(6px);
+    animation: ov-in .18s ease;
+  }
+  .demo-overlay[hidden]{ display:none; }
+  @keyframes ov-in{ from{ opacity:0; } to{ opacity:1; } }
+  .demo-frame-wrap{
+    width: min(1040px, 100%); height: min(680px, 100%);
+    background: var(--surface); border-radius:16px; overflow:hidden;
+    box-shadow: 0 30px 90px rgba(0,0,0,.35); border:1px solid var(--border);
+    display:flex; flex-direction:column; animation: mo-in .22s cubic-bezier(.2,.7,.3,1);
+  }
+  @keyframes mo-in{ from{ opacity:0; transform: translateY(10px) scale(.99);} to{ opacity:1; transform:none;} }
+  .demo-bar{ display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-bottom:1px solid var(--border); background: var(--surface-2); flex:0 0 auto; }
+  .demo-bar .dots{ display:flex; gap:6px; }
+  .demo-bar .dots i{ width:11px; height:11px; border-radius:50%; background: var(--border-strong); display:block; }
+  .demo-bar .lbl{ font-family: var(--font-mono); font-size:12px; color: var(--muted); }
+  .demo-bar .close{ margin-left:auto; width:30px; height:30px; border:none; background:none; border-radius:7px; color: var(--muted); cursor:pointer; display:grid; place-items:center; }
+  .demo-bar .close:hover{ background: var(--border); color: var(--fg); }
+  .demo-bar .close svg{ width:16px; height:16px; }
+  .demo-overlay iframe{ flex:1; width:100%; border:none; display:block; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto !important; }
+    *, *::before, *::after{
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* ---------- Print ---------- */
+  @media print{
+    :root{ --bg:#fff; --surface:#fff; }
+    @page{ margin: 18mm 16mm; }
+    body{ font-size: 10.5pt; line-height: 1.5; color:#1a2422; }
+    .topbar, .toc, .toc-wrap, footer .noprint{ display:none !important; }
+    .shell{ grid-template-columns: 1fr; padding-top: 0; gap:0; }
+    .cover{ border:none; padding: 0 0 1.2rem; }
+    .cover-meta{ box-shadow:none; }
+    section{ padding-top: 1rem; break-inside: avoid; }
+    h2{ break-after: avoid; }
+    .callout, .agents, .price, .agent, table.costs, ul.check li, ol.numbered li{ break-inside: avoid; }
+    .btn{ display:none; }
+    .price.lead{ background:#fff; color:#1a2422; border:1.5px solid #1a2422; }
+    .price.lead .plabel,.price.lead .per,.price.lead .pnote{ color:#556; }
+    a{ text-decoration: none; }
+    footer{ border-top:1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar" data-od-id="topbar">
+    <div class="mark"><span class="dot"></span><b>UPWEST&nbsp;+&nbsp;YUVAL</b></div>
+    <div style="display:flex; gap:.6rem; align-items:center;">
+    <button class="btn ghost" data-demo-open data-od-id="demo-btn-top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9z"/></svg>
+      Live demo
+    </button>
+    <button class="btn" id="printBtn" data-od-id="print-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>
+      Save as PDF
+    </button>
+    </div>
+  </div>
+
+  <!-- ============ COVER ============ -->
+  <header class="cover" data-od-id="cover">
+    <h1 data-od-id="cover-title">UpWest AI Agent Platform<br /><em>Scope of Work</em></h1>
+    <p class="lede">A private, permission-first AI-agent environment, delivered in two parts: a fixed-scope build of the foundation, then optional ongoing engineering as needs grow.</p>
+  </header>
+
+  <!-- ============ SHELL ============ -->
+  <div class="shell">
+
+    <!-- TOC -->
+    <nav class="toc" aria-label="Contents" data-od-id="toc">
+      <details class="toc-wrap" open>
+        <summary>On this page</summary>
+        <div class="toc-inner">
+          <p class="toc-title">Contents</p>
+          <ol id="tocList"></ol>
+        </div>
+      </details>
+    </nav>
+
+    <!-- ARTICLE -->
+    <article data-od-id="article">
+
+      <section id="s1" data-title="Summary">
+        <div class="sec-head"><span class="num">01</span><h2>Summary</h2></div>
+        <div class="callout accent">
+          <p>I'll set up a private AI-agent environment for UpWest in two parts. <strong>Phase 1</strong> is a focused, fixed-scope build of the technical foundation. <strong>Phase 2</strong> is optional, hourly help for the business-specific work we decide to add later — more agents, tasks, skills, controlled actions, maintenance, and improvements.</p>
+        </div>
+        <p>Phase 1 is about getting the environment, access controls, integrations, self-service tools, and recovery basics working properly. It is <em class="key">not</em> meant to deliver a complete catalog of UpWest workflows in the first month.</p>
+      </section>
+
+      <section id="s2" data-title="What we're building">
+        <div class="sec-head"><span class="num">02</span><h2>What we're building</h2></div>
+        <p>I'll start with three agents. Each has its own profile, role, instructions, approved users, tools, credentials, data sources, tasks, skills, schedules, and context boundary.</p>
+        <div class="agents" data-od-id="agents">
+          <div class="agent" data-od-id="agent-dealflow">
+            <span class="an">01</span>
+            <h4>Deal Flow Agent</h4>
+            <p>Pipeline, sourcing, and CRM context for the approved team.</p>
+          </div>
+          <div class="agent" data-od-id="agent-operational">
+            <span class="an">02</span>
+            <h4>Operational Agent</h4>
+            <p>Day-to-day operational retrieval across approved sources.</p>
+          </div>
+          <div class="agent gated" data-od-id="agent-financial">
+            <span class="an">03</span>
+            <h4>Financial Agent</h4>
+            <p>Cap table and financial context, held behind a hard boundary.</p>
+            <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Gil only</span>
+          </div>
+        </div>
+        <p>These first three are a starting point, not a permanent limit. I'll create reusable configuration and deployment patterns so we can define more agents later without rebuilding the environment. Every additional agent still needs a clear purpose, owner, users, permissions, data scope, and testing. Unless we add one to Phase 1 in writing, additional agents belong in Phase 2.</p>
+      </section>
+
+      <section id="s3" data-title="The hosted setup">
+        <div class="sec-head"><span class="num">03</span><h2>The hosted setup</h2></div>
+        <p>I will:</p>
+        <ul class="clean">
+          <li>Provision a dedicated Linux VPS for UpWest.</li>
+          <li>Install and configure Hermes Agent.</li>
+          <li>Set up secure remote administration, network access, and encrypted connections.</li>
+          <li>Keep credentials and tokens outside prompts, tasks, skills, and ordinary logs.</li>
+          <li>Configure the initial agent profiles and persistent state.</li>
+          <li>Set up basic monitoring for availability, connectors, and scheduled jobs.</li>
+          <li>Put backup and recovery procedures in place.</li>
+        </ul>
+        <p class="muted">This is a practical private deployment. Formal compliance certification, external penetration testing, and a guaranteed 24/7 operational SLA are <em class="key">not</em> included.</p>
+      </section>
+
+      <section id="s4" data-title="Identity &amp; real separation">
+        <div class="sec-head"><span class="num">04</span><h2>Identity &amp; real separation</h2></div>
+        <p>For the Deal Flow, Operational, and Financial Agent profiles, I'll define and test their roles and instructions, authorized users, available tools and integrations, credentials and data scope, memory and context boundaries, and where their tasks, skills, and schedules are stored.</p>
+        <p>I'll create an UpWest-specific identity and access setup that maps approved identities from each channel to internal UpWest users. The access model is simple:</p>
+        <ul class="check">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Approved team members can use the Deal Flow and Operational Agents.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Gil can use all three agents.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Only Gil can use the Financial Agent, Carta connection, or financial Dropbox connection.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Administrative access does not automatically grant access to protected financial content.</span></li>
+        </ul>
+        <p>Before any restricted company information is retrieved, I'll test that unknown, disabled, and unauthorized users are denied.</p>
+      </section>
+
+      <section id="s5" data-title="Access &amp; context">
+        <div class="sec-head"><span class="num">05</span><h2>Access &amp; context</h2></div>
+        <h3>The ways people can use it</h3>
+        <p>I'll configure and test two channels:</p>
+        <ul class="clean">
+          <li><strong>Email</strong> — approved employees can email the right agent and receive a reply from the approved agent mailbox.</li>
+          <li><strong>Hermes web / desktop</strong> — authenticated users see and use only the agents they are allowed to access.</li>
+        </ul>
+        <div class="callout">
+          <div class="tag">A note on Claude Desktop</div>
+          <p>I looked into a Claude Desktop integration. As it stands, it connects only through an MCP connector — so Claude can <em class="key">ask</em> the agent, but that's a step removed from talking to the agent directly, and the experience isn't as clean. If direct conversation matters, we can discuss other platforms that support talking to the agent more naturally.</p>
+        </div>
+        <h3>Keeping each person's context in the right place</h3>
+        <p>I'll set up a user-context mechanism that gives the selected agent its own role and instructions, approved shared UpWest information, the requesting employee's permitted relationship context, and restricted information <em class="key">only</em> when both the person and the agent are authorized.</p>
+        <p class="muted">The point is to avoid silently exposing one employee's private history to another, and to keep financial context inside the Financial Agent boundary.</p>
+      </section>
+
+      <section id="s6" data-title="How we'll work together">
+        <div class="sec-head"><span class="num">06</span><h2>How we'll work together</h2></div>
+        <p>At the start, I'll work with the team to:</p>
+        <ul class="clean">
+          <li>Confirm the initial 3–4 users, their approved email addresses and accounts, and which agents each person can access.</li>
+          <li>Confirm again that the Financial Agent is restricted to Gil.</li>
+          <li>Agree on the approved Gmail, Calendar, Affinity, Carta, and Dropbox scope.</li>
+          <li>Review the vendor plans, APIs, OAuth options, and export methods that are actually available.</li>
+          <li>Agree on a practical hosting, backup, retention, and monitoring approach.</li>
+        </ul>
+        <p>I'll work closely with the UpWest team and come into the office when it's useful for account setup, decisions, testing, or feedback — and be candid about blocked dependencies, security concerns, unexpected costs, and technical limits as they come up.</p>
+      </section>
+
+      <section id="s7" data-title="Included in the first month">
+        <div class="sec-head"><span class="num">07</span><h2>What's included in the first month</h2></div>
+        <div class="callout accent">
+          <p>All Phase 1 integrations and initial tasks are <strong>read-only</strong>. The agents aren't inherently read-only; this is a deliberate starting boundary while we test identity, permissions, data scope, behavior, and audit information. Every connection below depends on access the vendor supports under UpWest's account.</p>
+        </div>
+        <div class="scope">
+          <div>
+            <h3>Google Workspace <span class="ro">Read-only</span></h3>
+            <ul class="clean">
+              <li>Approved Gmail mailboxes, labels, or messages.</li>
+              <li>Approved Google Calendars and events.</li>
+              <li>Retrieval &amp; unauthorized-access testing.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Affinity <span class="ro">Read-only</span></h3>
+            <ul class="clean">
+              <li>Approved lists, organizations, people, opportunities, fields, and activities.</li>
+              <li>Retrieval testing against approved records.</li>
+              <li>A check that Phase 1 cannot modify Affinity.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Carta <span class="ro">Gil only</span></h3>
+            <ul class="clean">
+              <li>A supported API, connector, or export under UpWest's account.</li>
+              <li>Restricted to Gil through the Financial Agent.</li>
+              <li>Retrieval of an approved example dataset.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Dropbox <span class="ro">Gil only</span></h3>
+            <ul class="clean">
+              <li>Read-only access to financial folders approved by Gil.</li>
+              <li>Available only to Gil through the Financial Agent.</li>
+              <li>Verify Phase 1 cannot create, change, move, or delete files.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="muted">Unsupported API reverse engineering is not included.</p>
+      </section>
+
+      <section id="s8" data-title="Tasks, skills &amp; jobs">
+        <div class="sec-head"><span class="num">08</span><h2>Tasks, skills &amp; scheduled jobs</h2></div>
+        <p>I'll configure and test the tools authorized users need to:</p>
+        <ul class="clean">
+          <li>Create and edit a task.</li>
+          <li>Create and edit a reusable skill.</li>
+          <li>Test a task or skill before wider use.</li>
+          <li>Enable, disable, and remove it.</li>
+          <li>Review the relevant change history and restore a prior approved version.</li>
+          <li>Create, test, pause, modify, or remove a scheduled job.</li>
+        </ul>
+        <p>I'll use neutral technical examples in Phase 1 to prove these mechanisms. Production business workflows and scheduled reports belong in Phase 2 unless we specifically include them in writing.</p>
+        <p>After Phase 1, UpWest should be able to maintain straightforward tasks, reusable skills, and scheduled jobs without me — by following the documented process: define the instruction, choose the permitted agent and sources, test with approved examples, enable it, review the result, and disable or restore it when needed.</p>
+        <p class="muted">That self-service ability doesn't mean every workflow is simple or safe without engineering help. A new integration, complex permission rules, sensitive information, an action that changes another system, or difficult debugging may need Phase 2 support.</p>
+      </section>
+
+      <section id="s9" data-title="Monitoring &amp; recovery">
+        <div class="sec-head"><span class="num">09</span><h2>Monitoring, backups &amp; recovery</h2></div>
+        <p>I'll configure:</p>
+        <ul class="clean">
+          <li>Basic agent availability monitoring.</li>
+          <li>Connector authentication and retrieval monitoring.</li>
+          <li>Scheduled-job status and failure reporting.</li>
+          <li>Basic visibility into model usage and operating costs.</li>
+          <li>VPS snapshots or off-server backups at the practical level we agree on.</li>
+          <li>Protected backups of agent configuration, approved memory, tasks, skills, schedules, and relevant state.</li>
+          <li>Version and rollback procedures for tasks, skills, and important configuration.</li>
+          <li>One agreed recovery test before handover.</li>
+        </ul>
+        <div class="callout">
+          <p>A <strong>backup</strong> restores lost state. A <strong>rollback</strong> returns a task, skill, or configuration to a previous working version. I'll address both.</p>
+        </div>
+      </section>
+
+      <section id="s9b" data-title="A custom admin console">
+        <div class="sec-head"><span class="num">10</span><h2>A custom admin console</h2></div>
+        <p>Rather than managing everything through raw configuration files and the command line, I'll build a <strong>custom admin GUI</strong> for UpWest — a single place to see the environment's state and act on it without needing me in the loop.</p>
+        <p>From the console, authorized administrators can:</p>
+        <ul class="clean">
+          <li>Browse and edit tasks, skills, and scheduled jobs.</li>
+          <li>View change history and roll back to a previous approved version.</li>
+          <li>Manage users, their approved agents, and access levels.</li>
+          <li>Review agent, connector, and scheduled-job status at a glance.</li>
+          <li>Enable, disable, or remove a task, skill, or job.</li>
+        </ul>
+        <p class="muted">The console respects the same permission boundaries as the agents themselves — administrative access to the interface does not grant access to protected financial content.</p>
+        <button class="demo-cta" data-demo-open data-od-id="demo-cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9z"/></svg>
+          Launch the interactive demo
+        </button>
+      </section>
+
+      <section id="s10" data-title="Documentation &amp; handover">
+        <div class="sec-head"><span class="num">11</span><h2>Documentation &amp; handover</h2></div>
+        <p>I'll provide straightforward documentation covering the environment and administrative access; initial users, agents, and permissions; access through each communication channel; integration scope and known limitations; managing tasks, skills, and schedules; monitoring, backup, recovery, and rollback procedures; and known open issues with recommended Phase 2 priorities.</p>
+        <p>I'll also run an initial handover session for the first users.</p>
+      </section>
+
+      <section id="s11" data-title="What I'll hand over">
+        <div class="sec-head"><span class="num">12</span><h2>What I'll hand over</h2></div>
+        <p>By the end of Phase 1, the deliverables are:</p>
+        <ol class="numbered" data-od-id="deliverables">
+          <li>A dedicated hosted Hermes Agent environment.</li>
+          <li>Deal Flow, Operational, and Gil-only Financial Agent profiles.</li>
+          <li>Identity mapping and initial access configuration for approximately 3–4 users.</li>
+          <li>Configured email and Hermes access.</li>
+          <li>Read-only Google Workspace and Affinity connections within the approved scope.</li>
+          <li>Read-only Carta and Dropbox connections for Gil within the approved scope.</li>
+          <li>Task, skill, version, rollback, and scheduled-job mechanisms.</li>
+          <li>Monitoring, backup, recovery, and cost-visibility setup at the agreed level.</li>
+          <li>Access, denial, connector, failure, and recovery tests.</li>
+          <li>Documentation and an initial user handover.</li>
+          <li>Reusable configuration patterns for future agents.</li>
+        </ol>
+      </section>
+
+      <section id="s12" data-title="How we'll know Phase 1 is done">
+        <div class="sec-head"><span class="num">13</span><h2>How we'll know Phase 1 is done</h2></div>
+        <p>Phase 1 is complete when these agreed checks pass — or when a third-party limitation is documented and accepted:</p>
+        <ul class="check">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Approved users can reach their permitted agents through the agreed channels.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Unauthorized users cannot reach restricted agents or data.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Only Gil can access the Financial Agent, Carta, and financial Dropbox information.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Approved test data can be retrieved through supported Google Workspace, Affinity, Carta, and Dropbox connections.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Phase 1 integrations cannot modify connected source systems.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>An authorized user can create, test, disable, and restore a test task and skill.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>A test scheduled job can be run, paused, and reviewed.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Monitoring and backup status are visible.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>An agreed recovery or rollback test is complete.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>The documentation and known limitations are delivered.</span></li>
+        </ul>
+      </section>
+
+      <section id="s13" data-title="Timing &amp; dependencies">
+        <div class="sec-head"><span class="num">14</span><h2>Timing &amp; dependencies</h2></div>
+        <p>I plan to complete Phase 1 within no more than <strong>one calendar month</strong> from our agreed kickoff date. The working sequence is:</p>
+        <ol class="numbered">
+          <li>Confirm users, permissions, accounts, data scope, and vendor access.</li>
+          <li>Establish the hosted environment and initial agents.</li>
+          <li>Configure the communication channels and integrations.</li>
+          <li>Configure tasks, skills, schedules, monitoring, backups, and rollback.</li>
+          <li>Run access, retrieval, failure, and recovery tests.</li>
+          <li>Fix identified issues, finish the documentation, and complete handover.</li>
+        </ol>
+        <p class="muted">That schedule depends on the required accounts, permissions, vendor capabilities, responsible people, and test information being available in time. If access is delayed or a provider has no supported connection method, I'll complete everything available and document the blocked item. An unavailable connector cannot be accepted as operational.</p>
+      </section>
+
+      <section id="s14" data-title="What I'll need from UpWest">
+        <div class="sec-head"><span class="num">15</span><h2>What I'll need from UpWest</h2></div>
+        <p>UpWest will provide:</p>
+        <ul class="clean">
+          <li>One named person who can make scope and access decisions.</li>
+          <li>Relevant team members for questions, tests, and feedback.</li>
+          <li>Company email accounts for the agents.</li>
+          <li>The approved employee list and access assignments.</li>
+          <li>Administrator help for Google Workspace and other connected systems.</li>
+          <li>Credentials, OAuth approvals, API access, or supported exports for approved integrations.</li>
+          <li>Gil's participation in setting up the Financial Agent, Carta, and Dropbox.</li>
+          <li>Approved test emails, calendar events, CRM records, datasets, and documents.</li>
+          <li>Decisions on hosting region, retention, mailbox scope, calendar scope, CRM scope, and Dropbox folder scope.</li>
+          <li>Timely review of acceptance results and known limitations.</li>
+        </ul>
+      </section>
+
+      <section id="s15" data-title="Not included in Phase 1">
+        <div class="sec-head"><span class="num">16</span><h2>What isn't included in Phase 1</h2></div>
+        <p>The fixed first phase does not include:</p>
+        <ul class="clean excl">
+          <li>A complete production task or skill catalog.</li>
+          <li>Finished weekly or scheduled business reports.</li>
+          <li>Automatic source-system changes or external outreach.</li>
+          <li>Broad write access to connected systems.</li>
+          <li>Agents beyond the initial three.</li>
+          <li>Unsupported API reverse engineering.</li>
+          <li>A custom UpWest web or mobile application.</li>
+          <li>Detailed CFO, reconciliation, or investment-decision workflows.</li>
+          <li>LinkedIn or external data-enrichment integrations.</li>
+          <li>Formal compliance certification, legal privacy review, or external penetration testing.</li>
+          <li>24/7 support or a guaranteed service-response SLA.</li>
+          <li>Third-party licenses, hosting, model, API, or connector charges.</li>
+        </ul>
+        <p class="muted">If we want to add something, I'll estimate it and we'll approve it before I begin.</p>
+      </section>
+
+      <section id="s16" data-title="What comes later">
+        <div class="sec-head"><span class="num">17</span><h2>What comes later — Phase 2</h2></div>
+        <p>Phase 2 is optional ongoing engineering, billed only for the time we actually use. UpWest can handle straightforward tasks, skills, and scheduled jobs internally after Phase 1, and bring me in for more complex work, new capabilities, troubleshooting, or ongoing support. It is <em class="key">not</em> a mandatory retainer or an unlimited support commitment.</p>
+        <p>Phase 2 may include:</p>
+        <ul class="clean">
+          <li>Defining and deploying additional agents.</li>
+          <li>Building business-specific tasks and skills.</li>
+          <li>Scheduled reports and recurring workflows.</li>
+          <li>Controlled write or action capabilities.</li>
+          <li>Testing, debugging, and quality improvements.</li>
+          <li>Integration maintenance and authentication repairs.</li>
+          <li>New supported integrations.</li>
+          <li>Training and documentation updates.</li>
+          <li>Optimizing model usage and operating costs.</li>
+        </ul>
+        <p class="muted">For substantial requests, I'll share an estimate or working range before I start. My work records will identify the request, time used, changes made, tests completed, and known remaining issues.</p>
+      </section>
+
+      <section id="s17" data-title="Controlled actions">
+        <div class="sec-head"><span class="num">18</span><h2>Controlled actions, when we're ready</h2></div>
+        <p>Later, we may choose to let an agent take specific actions — for example: send an approved email, create or update an Affinity record, create a calendar event, move an approved document, or trigger another clearly defined system action.</p>
+      </section>
+
+      <section id="s18" data-title="Costs">
+        <div class="sec-head"><span class="num">19</span><h2>Costs</h2></div>
+        <div class="pricing" data-od-id="pricing">
+          <div class="price lead" data-od-id="price-phase1">
+            <div class="plabel">Phase 1 — fixed</div>
+            <div class="amount">$15,000</div>
+            <div class="per">USD · one-time</div>
+            <p class="pnote">Covers the Phase 1 scope and deliverables in this scope of work, based on the assumptions, responsibilities, exclusions, and availability of supported vendor access described here.</p>
+          </div>
+          <div class="price" data-od-id="price-phase2">
+            <div class="plabel">Phase 2 — hourly</div>
+            <div class="amount">$150</div>
+            <div class="per">USD / hour · actual time used</div>
+            <p class="pnote">Optional ongoing engineering, billed only for the time we use. Not a mandatory retainer.</p>
+          </div>
+        </div>
+        <h3>Estimated recurring third-party costs</h3>
+        <table class="costs" data-od-id="recurring-costs">
+          <thead><tr><th>Item</th><th style="text-align:right">Estimate</th></tr></thead>
+          <tbody>
+            <tr><td>Codex OAuth / model plan</td><td class="amt">$100 / mo</td></tr>
+            <tr><td>Production VPS</td><td class="amt">$30 / mo</td></tr>
+            <tr><td>Backups, monitoring &amp; storage</td><td class="amt">$15–40 / mo</td></tr>
+            <tr class="total"><td>Estimated baseline total</td><td class="amt">$145–170 / mo</td></tr>
+          </tbody>
+        </table>
+        <p class="muted">These are planning estimates, not fixed third-party quotes. Existing Google Workspace, Affinity, Carta, Dropbox, and other software licenses are not included. We'll confirm payment timing, invoicing details, taxes, and any applicable legal terms in the final commercial agreement.</p>
+      </section>
+
+      <section id="s19" data-title="A few honest limits">
+        <div class="sec-head"><span class="num">20</span><h2>A few honest limits</h2></div>
+        <div class="callout">
+          <ul class="clean" style="margin-bottom:0">
+            <li>AI-generated results are not guaranteed to be correct.</li>
+            <li>Important investment, legal, accounting, operational, and financial results need appropriate human review.</li>
+            <li>Vendor APIs, plans, identity support, availability, prices, policies, and model limits may change.</li>
+            <li>Security controls reduce risk; they cannot guarantee that every error or incident is impossible.</li>
+            <li>I'll report material technical limits, security concerns, unexpected costs, and blocked dependencies directly.</li>
+          </ul>
+        </div>
+      </section>
+
+    </article>
+  </div>
+
+  <footer data-od-id="footer">
+    <span>UPWEST&nbsp;+&nbsp;YUVAL · AI AGENT PLATFORM</span>
+    <span class="noprint">PRIVATE &amp; CONFIDENTIAL</span>
+  </footer>
+
+  <!-- Interactive demo modal -->
+  <div class="demo-overlay" id="demoOverlay" hidden data-od-id="demo-modal">
+    <div class="demo-frame-wrap" role="dialog" aria-modal="true" aria-label="UpWest Brain demo">
+      <div class="demo-bar">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="lbl">UpWest Brain — interactive demo</span>
+        <button class="close" id="demoClose" aria-label="Close demo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <iframe id="demoFrame" title="UpWest Brain demo" loading="lazy" data-src="/soc/upwest/agent-console-demo.html"></iframe>
+    </div>
+  </div>
+
+<script>
+  // Print / Save as PDF
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+
+  // Interactive demo modal
+  (function(){
+    var overlay = document.getElementById('demoOverlay');
+    var frame = document.getElementById('demoFrame');
+    var closeButton = document.getElementById('demoClose');
+    var focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    var frameDocument;
+    var launcher;
+    function getFrameFocusable(){
+      if(!frameDocument) return [];
+      return Array.prototype.filter.call(frameDocument.querySelectorAll(focusableSelector), function(element){
+        return element.getAttribute('aria-hidden') !== 'true' && (element.offsetWidth || element.offsetHeight || element.getClientRects().length);
+      });
+    }
+    function focusFrameEdge(last){
+      var focusable = getFrameFocusable();
+      var firstFocusable = focusable[0];
+      var lastFocusable = focusable[focusable.length - 1];
+      if(last && lastFocusable){ lastFocusable.focus(); return; }
+      if(firstFocusable){ firstFocusable.focus(); return; }
+      frame.focus();
+    }
+    function handleFrameKeydown(e){
+      if(overlay.hidden) return;
+      if(e.key === 'Escape'){ e.preventDefault(); close(); return; }
+      if(e.key === 'Tab'){
+        var focusable = getFrameFocusable();
+        var firstFocusable = focusable[0];
+        var lastFocusable = focusable[focusable.length - 1];
+        if(!firstFocusable || (e.shiftKey && frameDocument.activeElement === firstFocusable) || (!e.shiftKey && frameDocument.activeElement === lastFocusable)){
+          e.preventDefault();
+          closeButton.focus();
+        }
+      }
+    }
+    function bindFrameDocument(){
+      if(frameDocument) frameDocument.removeEventListener('keydown', handleFrameKeydown);
+      try {
+        frameDocument = frame.contentDocument;
+        if(frameDocument) frameDocument.addEventListener('keydown', handleFrameKeydown);
+      } catch(error) {
+        frameDocument = null;
+      }
+    }
+    function open(e){
+      launcher = e.currentTarget;
+      if(!frame.src){ frame.src = frame.dataset.src; }   // lazy-load on first open
+      overlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      closeButton.focus();
+    }
+    function close(){
+      overlay.hidden = true;
+      document.body.style.overflow = '';
+      if(launcher){ launcher.focus(); launcher = null; }
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('[data-demo-open]'), function(b){ b.addEventListener('click', open); });
+    closeButton.addEventListener('click', close);
+    overlay.addEventListener('click', function(e){ if(e.target === overlay) close(); });
+    frame.addEventListener('load', bindFrameDocument);
+    document.addEventListener('keydown', function(e){
+      if(overlay.hidden) return;
+      if(e.key === 'Escape'){ close(); return; }
+      if(e.key === 'Tab'){
+        if(document.activeElement === closeButton){ e.preventDefault(); focusFrameEdge(e.shiftKey); }
+        else if(document.activeElement !== frame){ e.preventDefault(); closeButton.focus(); }
+      }
+    });
+  })();
+
+  // Build TOC from sections
+  (function(){
+    var secs = Array.prototype.slice.call(document.querySelectorAll('article section'));
+    var list = document.getElementById('tocList');
+    secs.forEach(function(s, i){
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '#' + s.id;
+      a.dataset.target = s.id;
+      var n = String(i+1).padStart(2,'0');
+      a.innerHTML = '<span class="n">'+n+'</span><span>'+ s.getAttribute('data-title') +'</span>';
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+
+    var links = {};
+    Array.prototype.slice.call(list.querySelectorAll('a')).forEach(function(a){ links[a.dataset.target] = a; });
+
+    // Scroll-spy
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          Object.values(links).forEach(function(l){ l.classList.remove('active'); });
+          var active = links[e.target.id];
+          if(active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    secs.forEach(function(s){ io.observe(s); });
+
+    // On mobile, collapse the TOC after a jump
+    list.addEventListener('click', function(){
+      if(window.matchMedia('(max-width:1000px)').matches){
+        var wrap = document.querySelector('.toc-wrap');
+        if(wrap) wrap.open = false;
+      }
+    });
+  })();
+</script>
+</body>
+</html>

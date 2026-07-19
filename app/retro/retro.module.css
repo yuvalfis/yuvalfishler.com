@@ -1,0 +1,1040 @@
+/* ==========================================================================
+   YUVAL FISHLER DOT COM — a shrine to the year 2003
+   Deliberately kitsch, but crafted: neon-on-black cinematic Flash energy.
+   Ported 1:1 from the design handoff export; scoped to this route via
+   CSS Modules so it never bleeds into other pages of the site.
+   Palette:  bg #05010a  |  cyan #00e5ff  |  magenta #ff2bd6  |  lime #7cff3f
+   Type roles: Impact (announce) · Georgia (read) · Courier New (system)
+   ========================================================================== */
+
+.page {
+  --void: #05010a;
+  --panel: #0d0820;
+  --panel-hi: #241a4d;
+  --panel-lo: #060312;
+  --cyan: #00e5ff;
+  --magenta: #ff2bd6;
+  --lime: #7cff3f;
+  --gold: #ffd23f;
+  --ink: #e8e6ff;
+  --dim: #9a90d6;
+
+  overflow-x: hidden;
+  background: var(--void);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.6;
+  /* tiled 2003 starfield, zero external assets */
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 65%, #9fe8ff 50%, transparent 51%),
+    radial-gradient(1px 1px at 40% 80%, #ffb3f0 50%, transparent 51%),
+    radial-gradient(2px 2px at 85% 15%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 10% 90%, #b9ff9f 50%, transparent 51%),
+    radial-gradient(circle at 50% -10%, #1a0b3d 0%, var(--void) 60%);
+  background-size: 180px 180px, 220px 220px, 260px 260px, 300px 300px, 200px 200px, 100% 100%;
+}
+
+.page a {
+  color: var(--cyan);
+  text-decoration: underline;
+}
+.page a:visited {
+  color: var(--magenta);
+}
+.page a:hover {
+  color: var(--lime);
+  background: #1a0b3d;
+}
+
+.page p {
+  max-width: 66ch;
+}
+
+/* ---------- skip link — keyboard bypass to content ---------- */
+.skipLink {
+  position: fixed;
+  top: -60px;
+  left: 8px;
+  z-index: 10000;
+  padding: 8px 14px;
+  border: 2px solid #000;
+  background: var(--gold);
+  color: #000;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: top 0.12s;
+}
+.skipLink:focus {
+  top: 8px;
+  color: #000;
+  background: var(--gold);
+}
+
+/* ---------- FLASH SPLASH INTRO ------------------------------------------ */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 45%, #12002b 0%, #000 75%);
+  text-align: center;
+  transition: opacity 0.8s ease;
+}
+.splashGone {
+  opacity: 0;
+  pointer-events: none;
+}
+.splashGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--cyan) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cyan) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.1;
+  transform: perspective(340px) rotateX(62deg) translateY(24%);
+  transform-origin: bottom;
+  animation: splashGridScroll 6s linear infinite;
+}
+@keyframes splashGridScroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 44px;
+  }
+}
+.splashName {
+  position: relative;
+  margin: 0;
+  color: #fff;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(46px, 11vw, 120px);
+  line-height: 0.92;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-shadow: 0 0 6px var(--cyan), 0 0 22px var(--cyan), 0 0 44px var(--magenta);
+  animation: flicker 3.4s infinite;
+}
+.highlight {
+  color: var(--magenta);
+  text-shadow: 0 0 6px var(--magenta), 0 0 24px var(--magenta);
+}
+@keyframes flicker {
+  0%,
+  19%,
+  21%,
+  23%,
+  80%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  22%,
+  55% {
+    opacity: 0.72;
+  }
+}
+.splashTag {
+  position: relative;
+  margin: 14px 0 30px;
+  color: var(--lime);
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+}
+.loadBar {
+  position: relative;
+  width: min(320px, 72vw);
+  height: 18px;
+  padding: 2px;
+  border: 2px solid var(--cyan);
+  background: #000;
+  box-shadow: 0 0 12px var(--cyan);
+}
+.loadBarFill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: repeating-linear-gradient(90deg, var(--cyan) 0 8px, var(--magenta) 8px 16px);
+  animation: splashLoad 3.2s steps(40) forwards;
+}
+@keyframes splashLoad {
+  to {
+    width: 100%;
+  }
+}
+.loadText {
+  position: relative;
+  margin: 8px 0 0;
+  color: var(--dim);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+.splashButtons {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 30px;
+}
+.splashButtonPrimary,
+.splashButtonSkip {
+  cursor: pointer;
+  color: #fff;
+  background: #12002b;
+  font-family: Impact, sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 26px;
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+  transition: 0.15s;
+}
+.splashButtonPrimary:hover,
+.splashButtonSkip:hover {
+  background: var(--cyan);
+  color: #000;
+  transform: scale(1.06);
+}
+.splashButtonSkip {
+  padding: 12px 16px;
+  border-color: var(--dim);
+  box-shadow: none;
+  color: var(--dim);
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+}
+.splashButtonSkip:hover {
+  background: #1a0b3d;
+  color: #fff;
+}
+.splashNote {
+  position: absolute;
+  bottom: 14px;
+  color: #5a4d8a;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+}
+
+/* ---------- FAKE FRAMESET LAYOUT ---------------------------------------- */
+.shell {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  min-height: 100vh;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-right: 2px solid #241a4d;
+  border-left: 2px solid #241a4d;
+}
+
+/* top marquee ticker spans both frames */
+.tickerBar {
+  grid-column: 1 / -1;
+  padding: 5px 0;
+  border-bottom: 2px solid var(--magenta);
+  background: #000;
+  box-shadow: 0 0 14px rgba(255, 43, 214, 0.5) inset;
+}
+.tickerViewport {
+  overflow: hidden;
+}
+.tickerTrack {
+  display: flex;
+  width: max-content;
+  animation: tickerScroll 24s linear infinite;
+}
+.tickerViewport:hover .tickerTrack,
+.tickerViewport:focus-within .tickerTrack {
+  animation-play-state: paused;
+}
+@keyframes tickerScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.tickerMessage {
+  padding-right: 3em;
+  color: var(--lime);
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.tickerMessage b {
+  color: var(--gold);
+}
+.hot {
+  color: var(--magenta);
+}
+
+/* under construction barber-pole banner */
+.construction {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 8px 12px;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  background: repeating-linear-gradient(45deg, var(--gold) 0 18px, #000 18px 36px);
+  background-size: 200% 100%;
+  color: #000;
+  font-family: Impact, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-shadow: 0 0 4px #000, 0 0 4px #000;
+  animation: pole 1.4s linear infinite;
+}
+.constructionLabel {
+  padding: 2px 10px;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px #000;
+}
+@keyframes pole {
+  to {
+    background-position: 36px 0;
+  }
+}
+
+/* LEFT FRAME — sidebar nav */
+.frameL {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 14px 12px 40px;
+  background: linear-gradient(180deg, #0d0820, #060312);
+  border-right: 3px ridge var(--panel-hi);
+}
+.badge {
+  margin-bottom: 14px;
+  padding: 8px;
+  border: 3px double var(--cyan);
+  background: #000;
+  text-align: center;
+}
+.badgeName {
+  margin: 0;
+  color: #fff;
+  font-family: Impact, sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 8px var(--cyan);
+}
+.badgeSub {
+  margin: 3px 0 0;
+  color: var(--lime);
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+}
+.avatar {
+  display: block;
+  width: 100%;
+  margin: 0 auto 6px;
+  background: #000;
+  border: 2px solid var(--magenta);
+  image-rendering: pixelated;
+}
+.avatarCaption {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: 11px;
+  text-align: center;
+}
+
+.navTitle {
+  margin: 14px 0 8px;
+  padding-bottom: 3px;
+  border-bottom: 1px dashed var(--panel-hi);
+  color: var(--dim);
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+}
+.navButton {
+  display: block;
+  width: 100%;
+  margin: 4px 0;
+  padding: 6px 8px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--ink);
+  background: linear-gradient(180deg, #1a1140, #0c0722);
+  font-family: Georgia, serif;
+  font-size: 14px;
+  border: 2px outset var(--panel-hi);
+  transition: 0.12s;
+}
+.navButton::before {
+  content: "» ";
+  color: var(--lime);
+}
+.navButton:hover {
+  background: var(--cyan);
+  color: #000;
+  border-style: inset;
+}
+.navButton:hover::before {
+  color: #000;
+}
+.navButton:focus-visible {
+  background: var(--cyan);
+  color: #000;
+  outline-offset: 0;
+}
+.navButton:focus-visible::before {
+  color: #000;
+}
+
+/* mini widgets in sidebar */
+.widget {
+  margin-top: 16px;
+  padding: 8px;
+  background: #000;
+  border: 2px inset var(--panel-hi);
+}
+.widgetBare {
+  padding: 0;
+  border: none;
+}
+.widgetTitle {
+  margin: 0 0 6px;
+  color: var(--magenta);
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* hit counter odometer */
+.counter {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+.counterDigit {
+  width: 16px;
+  padding: 0;
+  color: var(--lime);
+  background: #000;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid var(--lime);
+  box-shadow: 0 0 6px var(--lime) inset;
+}
+.counterLabel {
+  margin-top: 5px;
+  color: var(--dim);
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  text-align: center;
+}
+
+/* winamp-style chiptune player */
+.player {
+  border: 2px outset #3a2d6e;
+}
+.playerPulse {
+  animation: playerPulseGlow 1.4s ease 3;
+}
+@keyframes playerPulseGlow {
+  from {
+    box-shadow: 0 0 0 rgba(255, 43, 214, 0);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(255, 43, 214, 0.9);
+  }
+  to {
+    box-shadow: 0 0 0 rgba(255, 43, 214, 0);
+  }
+}
+.playerHead {
+  margin: 0;
+  padding: 2px 5px;
+  color: #000;
+  background: linear-gradient(90deg, var(--magenta), var(--cyan));
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+.playerBody {
+  padding: 6px;
+  background: #000;
+}
+.playerTrackViewport {
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--lime);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+}
+.playerTrackText {
+  display: inline-block;
+  padding-left: 100%;
+  animation: playerTrackScroll 9s linear infinite;
+}
+@keyframes playerTrackScroll {
+  to {
+    transform: translateX(-100%);
+  }
+}
+.playerViz {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 26px;
+  margin: 6px 0;
+}
+.playerVizBar {
+  flex: 1;
+  height: 20%;
+  background: linear-gradient(var(--magenta), var(--cyan));
+}
+.playerPlaying .playerVizBar {
+  animation: playerEq 0.6s ease-in-out infinite alternate;
+}
+@keyframes playerEq {
+  from {
+    height: 15%;
+  }
+  to {
+    height: 100%;
+  }
+}
+.playerControls {
+  display: flex;
+  gap: 4px;
+}
+.playerControls button {
+  flex: 1;
+  padding: 3px;
+  cursor: pointer;
+  color: var(--cyan);
+  background: linear-gradient(180deg, #2a1f5a, #120b30);
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  border: 2px outset #3a2d6e;
+}
+.playerControls button:active {
+  border-style: inset;
+}
+
+/* RIGHT FRAME — content */
+.frameR {
+  padding: 0 26px 60px;
+  background: rgba(8, 4, 20, 0.72);
+}
+.section {
+  padding: 30px 4px 10px;
+  border-bottom: 1px dashed #241a4d;
+  scroll-margin-top: 20px;
+}
+.sectionNoBorder {
+  border-bottom: none;
+}
+.section h2 {
+  margin: 0 0 4px;
+  color: #fff;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(28px, 4.4vw, 46px);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px var(--cyan), 3px 3px 0 var(--magenta);
+}
+.kicker {
+  margin: 0 0 16px;
+  color: var(--lime);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.lead {
+  font-size: 17px;
+}
+.cyanText {
+  color: var(--cyan);
+}
+.magentaText {
+  color: var(--magenta);
+}
+.terminalNote {
+  padding-left: 10px;
+  border-left: 3px solid var(--lime);
+  color: var(--lime);
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+}
+.blink {
+  animation: blink 1s steps(2) infinite;
+  color: var(--gold);
+  font-weight: bold;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* hero home */
+.hero {
+  padding: 24px 0 6px;
+  text-align: center;
+}
+.heroTitle {
+  margin: 0;
+  color: #fff;
+  font-family: Impact, sans-serif;
+  font-size: clamp(34px, 7vw, 74px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px var(--cyan), 0 0 30px var(--magenta);
+}
+.heroTitle em {
+  color: var(--magenta);
+  font-style: normal;
+}
+.wordArt {
+  margin: 10px 0;
+  background: linear-gradient(90deg, var(--gold), var(--magenta), var(--cyan), var(--lime));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.4);
+  font-family: Impact, sans-serif;
+  font-size: clamp(20px, 3.4vw, 32px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* animated typewriter identity plaque */
+.typer {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 100%;
+  margin: 8px auto 4px;
+  padding: 12px 22px;
+  background: #000;
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 14px var(--cyan), 0 0 4px var(--cyan) inset;
+  font-family: "Courier New", monospace;
+}
+.typerPrefix {
+  color: var(--dim);
+  font-size: clamp(16px, 2.6vw, 22px);
+  letter-spacing: 0.06em;
+}
+.typerText {
+  min-height: 1.2em;
+  color: var(--lime);
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 8px var(--lime);
+}
+.typerCaret {
+  color: var(--magenta);
+  font-size: clamp(18px, 3vw, 26px);
+  text-shadow: 0 0 8px var(--magenta);
+  animation: caretBlink 1s steps(1) infinite;
+}
+@keyframes caretBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* résumé job cards */
+.job {
+  margin: 0 0 14px;
+  background: linear-gradient(180deg, #0f0a26, #080418);
+  border: 2px groove var(--panel-hi);
+}
+.jobHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 7px 10px;
+  background: #000;
+  border-bottom: 2px solid var(--magenta);
+}
+.jobRole {
+  color: var(--cyan);
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+.jobCompany {
+  color: var(--gold);
+}
+.jobYear {
+  padding: 1px 6px;
+  color: var(--lime);
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  white-space: nowrap;
+  border: 1px solid var(--lime);
+}
+.job ul {
+  margin: 8px 0;
+  padding: 6px 10px 10px 28px;
+}
+.job li {
+  margin: 3px 0;
+  font-size: 14.5px;
+}
+.job li::marker {
+  color: var(--magenta);
+  content: "► ";
+}
+
+/* skills bars */
+.skills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 20px;
+}
+@media (max-width: 640px) {
+  .skills {
+    grid-template-columns: 1fr;
+  }
+}
+.skillLabelRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+  color: var(--ink);
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+}
+.skillPercent {
+  color: var(--lime);
+  font-style: normal;
+}
+.barTrack {
+  height: 14px;
+  padding: 1px;
+  background: #000;
+  border: 1px solid var(--cyan);
+}
+.barFill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: repeating-linear-gradient(90deg, var(--cyan) 0 6px, var(--magenta) 6px 12px);
+  transition: width 1.4s ease-out;
+}
+
+/* hobbies chips */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.chip {
+  padding: 6px 12px;
+  cursor: default;
+  color: var(--gold);
+  background: linear-gradient(180deg, #1a1140, #0c0722);
+  font-family: "Comic Sans MS", cursive;
+  font-size: 14px;
+  border: 2px outset var(--panel-hi);
+  transition: transform 0.12s, background-color 0.12s, color 0.12s;
+}
+.chip:hover {
+  background: var(--magenta);
+  color: #000;
+  transform: rotate(-2deg);
+}
+.hobbiesNote {
+  margin-top: 14px;
+  color: var(--dim);
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+}
+
+/* guestbook */
+.guestbookForm {
+  margin-bottom: 14px;
+  padding: 12px;
+  background: #000;
+  border: 2px inset var(--panel-hi);
+}
+.guestbookForm label {
+  display: block;
+  margin: 6px 0 3px;
+  color: var(--cyan);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.guestbookForm input,
+.guestbookForm textarea {
+  width: 100%;
+  padding: 6px;
+  color: var(--lime);
+  background: #0a0620;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  border: 2px inset #2a1f5a;
+}
+.guestbookForm textarea {
+  min-height: 56px;
+  resize: vertical;
+}
+.formRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.formRow > div {
+  flex: 1;
+  min-width: 130px;
+}
+.guestbookSubmit {
+  margin-top: 10px;
+  padding: 8px 20px;
+  cursor: pointer;
+  color: #000;
+  background: var(--gold);
+  font-family: Impact, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 2px outset #a8850f;
+}
+.guestbookSubmit:hover {
+  background: var(--cyan);
+}
+.guestbookList {
+  margin-top: 6px;
+}
+.guestbookEntry {
+  margin: 8px 0;
+  padding: 8px 10px;
+  background: #0b0722;
+  border: 2px groove var(--panel-hi);
+}
+.entryTop {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+}
+.entryName {
+  color: var(--magenta);
+  font-weight: bold;
+}
+.entryWhen {
+  color: var(--dim);
+}
+.entryMessage {
+  margin: 5px 0 0;
+  color: var(--ink);
+  font-size: 14px;
+}
+.entryLocation {
+  color: var(--lime);
+}
+
+/* contact */
+.contactBox {
+  padding: 16px;
+  background: #000;
+  border: 3px double var(--cyan);
+  text-align: center;
+}
+.contactBox a {
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+}
+.mailLink {
+  color: var(--gold);
+  font-family: Impact, sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+}
+.contactLocation {
+  color: var(--lime);
+  font-family: "Courier New", monospace;
+}
+.contactNote {
+  margin-top: 10px;
+  color: var(--dim);
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+}
+
+/* footer */
+.footer {
+  grid-column: 1 / -1;
+  padding: 16px 10px 26px;
+  color: var(--dim);
+  background: #000;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1.9;
+  text-align: center;
+  border-top: 2px solid var(--magenta);
+}
+.footerBadges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0;
+}
+.footerBadge {
+  padding: 3px 8px;
+  color: var(--lime);
+  background: #0b0722;
+  font-size: 10px;
+  border: 1px solid var(--panel-hi);
+}
+.footerBadgeBest {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* to-top rocket */
+.toTop {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 500;
+  display: block;
+  width: 46px;
+  height: 46px;
+  cursor: pointer;
+  font-size: 26px;
+  background: #000;
+  border: 2px outset var(--cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--cyan);
+}
+.toTop:hover {
+  background: var(--cyan);
+}
+
+/* sparkle cursor trail */
+.spark {
+  position: fixed;
+  z-index: 8000;
+  pointer-events: none;
+  font-size: 14px;
+  animation: sparkleFade 0.8s ease-out forwards;
+}
+@keyframes sparkleFade {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.2) translateY(-14px);
+  }
+}
+
+/* keyboard focus — visible high-contrast ring on every control */
+.page a:focus-visible,
+.page button:focus-visible,
+.page input:focus-visible,
+.page textarea:focus-visible,
+.page [tabindex]:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .frameL {
+    position: static;
+    max-height: none;
+    border-bottom: 3px ridge var(--panel-hi);
+    border-right: none;
+  }
+  .frameR {
+    padding: 0 14px 60px;
+  }
+}
+
+/* respect users who ask for less motion — calm every animation, keep the neon look */
+@media (prefers-reduced-motion: reduce) {
+  .page *,
+  .page *::before,
+  .page *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .splashName {
+    animation: none;
+    opacity: 1;
+  }
+  .splashGrid {
+    animation: none;
+  }
+  .loadBarFill {
+    width: 100% !important;
+    animation: none;
+  }
+  .playerTrackText {
+    animation: none;
+    padding-left: 0;
+    white-space: normal;
+  }
+  .playerPlaying .playerVizBar {
+    animation: none;
+    height: 60%;
+  }
+  .typerCaret {
+    animation: none;
+    opacity: 1;
+  }
+  .blink {
+    animation: none;
+    opacity: 1;
+  }
+  .construction {
+    animation: none;
+    background-position: 0 0;
+  }
+  .spark {
+    display: none;
+  }
+}
